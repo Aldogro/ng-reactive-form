@@ -40,7 +40,15 @@ export class CustomerComponent implements OnInit {
       }, { validator: emailMatcher }),
       sendCatalog: [false, [Validators.required]],
       phone: [null],
-      notification: ['email']
+      notification: ['email'],
+      addresses: this.fb.group({
+        addressType: 'home',
+        street1: '',
+        street2: '',
+        city: '',
+        state: 'AZ',
+        zip: ''
+      })
     });
 
     this.customerForm.get('notification').valueChanges
