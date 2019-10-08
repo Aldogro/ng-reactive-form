@@ -1,0 +1,259 @@
+<div class="card">
+        <div class="card-header">
+          Sign Up!
+        </div>
+      
+        <div class="card-body">
+          <form (ngSubmit)="save()" [formGroup]="customerForm">
+      
+            <div class="form-group row mb-2">
+              <label class="col-md-2 col-form-label"
+                     for="firstNameId">First Name</label>
+              <div class="col-md-8">
+                <input class="form-control"
+                       (keypress)="inputSubscribe()"
+                       id="firstNameId"
+                       formControlName="firstName"
+                       type="text"
+                       placeholder="First Name (required)"
+                       [ngClass]="{'is-invalid': (customerForm.get('firstName').touched || customerForm.get('firstName'.dirty)) && !customerForm.get('firstName').valid}">
+                <span class="invalid-feedback">
+                  <span *ngIf="customerForm.get('firstName')['errors']?.required">
+                    Please enter your first name.
+                  </span>
+                  <span *ngIf="customerForm.get('firstName')['errors']?.minlength">
+                    The first name must be longer than 3 characters.
+                  </span>
+                </span>
+              </div>
+            </div>
+      
+            <div class="form-group row mb-2">
+              <label class="col-md-2 col-form-label"
+                     for="lastNameId">Last Name</label>
+              <div class="col-md-8">
+                <input class="form-control"
+                       id="lastNameId"
+                       formControlName="lastName"
+                       type="text"
+                       placeholder="Last Name (required)"
+                       [ngClass]="{'is-invalid': (customerForm.get('lastName').touched || customerForm.get('lastName'.dirty)) && !customerForm.get('lastName').valid}"
+                       name="lastName">
+                <span class="invalid-feedback">
+                  <span *ngIf="customerForm.get('lastName')['errors']?.required">
+                    Please enter your last name.
+                  </span>
+                  <span *ngIf="customerForm.get('lastName')['errors']?.minlength">
+                    The last name must be at least 3 characters long.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <div formGroupName="emailGroup">
+              <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label"
+                      for="emailId">Email</label>
+                <div class="col-md-8">
+                  <input class="form-control"
+                        id="emailId"
+                        formControlName="email"
+                        type="email"
+                        placeholder="Email (required)"
+                        [ngClass]="{'is-invalid': customerForm.get('emailGroup').errors || ((customerForm.get('emailGroup').get('email').touched || customerForm.get('emailGroup').get('email').dirty) && !customerForm.get('emailGroup').get('email').valid)}">
+                  <span class="invalid-feedback">
+                    <span *ngIf="customerForm.get('emailGroup').get('email').hasError('required')">
+                      Please enter your email address.
+                    </span>
+                    <span *ngIf="!customerForm.get('emailGroup').valid">
+                      Please enter a valid email address.
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label"
+                      for="emailId">Confirm email</label>
+                <div class="col-md-8">
+                  <input class="form-control"
+                        id="emailId"
+                        formControlName="email2"
+                        type="email"
+                        placeholder="Confirm email (required)"
+                        [ngClass]="{'is-invalid': customerForm.get('emailGroup').errors || ((customerForm.get('emailGroup').get('email2').touched || customerForm.get('emailGroup').get('email2').dirty) && !customerForm.get('emailGroup').get('email2').valid)}">
+                  <span class="invalid-feedback">
+                    <span *ngIf="customerForm.get('emailGroup').hasError('match')">Both emails must be the same</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row mb-2">
+              <label for="phoneId" class="col-md-2 col-form-label" for="phoneId">Phone</label>
+              <div class="col-md-8">
+                <input id="phoneId" type="tel" class="form-control"
+                      placeholder="Phone" formControlName="phone"
+                      [ngClass]="{ 'is-invalid': !customerForm.get('phone').valid }">
+                <span class="invalid-feedback">
+                  <span *ngIf="customerForm.get('phone')['errors']">Please enter your phone number</span>
+                </span>
+              </div>
+            </div>
+
+      
+            <div class="form-group row mb-2">
+              <div class="col-md-8">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input"
+                           id="sendCatalogId"
+                           formControlName="sendCatalog"
+                           type="checkbox">
+                           Send me your catalog
+                  </label>
+                </div>
+              </div>
+            </div>
+      
+<!--             <div *ngIf="customerForm.get('sendCatalog').value">
+              <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label pt-0">Address Type</label>
+                <div class="col-md-8">
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             id="addressType1Id"
+                             type="radio"
+                             value="home"
+                             name="addressType"> Home
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             id="addressType1Id"
+                             type="radio"
+                             value="work"
+                             name="addressType"> Work
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             id="addressType1Id"
+                             type="radio"
+                             value="other"
+                             name="addressType"> Other
+                    </label>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label"
+                       for="street1Id">Street Address 1</label>
+                <div class="col-md-8">
+                  <input class="form-control"
+                         id="street1Id"
+                         type="text"
+                         placeholder="Street address"
+                         name="street1">
+                </div>
+              </div>
+      
+              <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label"
+                       for="street2Id">Street Address 2</label>
+                <div class="col-md-8">
+                  <input class="form-control"
+                         id="street2Id"
+                         type="text"
+                         placeholder="Street address (second line)"
+                         name="street2">
+                </div>
+              </div>
+      
+              <div class="form-group row mb-2">
+                <label class="col-md-2 col-form-label"
+                       for="cityId">City, State, Zip Code</label>
+                <div class="col-md-3">
+                  <input class="form-control"
+                         id="cityId"
+                         type="text"
+                         placeholder="City"
+                         name="city">
+                </div>
+                <div class="col-md-3">
+                  <select class="form-control"
+                          id="stateId"
+                          name="state">
+                    <option value=""
+                            disabled
+                            selected
+                            hidden>Select a State...</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <input class="form-control"
+                         id="zipId"
+                         type="number"
+                         placeholder="Zip Code"
+                         name="zip">
+                </div>
+              </div>
+            </div> -->
+
+            <div class="form-group row mb-2">
+              <label class="col-md-2 col-form-label pt-0">Send Notifications</label>
+              <div class="col-md-8">
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input"
+                           value="email" formControlName="notification"
+                           (click)="setNotification('email')">Email
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input"
+                           value="text" formControlName="notification"
+                           (click)="setNotification('text')">Text
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row mb-2">
+              <div class="offset-md-2 col-md-4">
+                <button class="btn btn-primary mr-3"
+                        type="submit"
+                        [title]="customerForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                        [disabled]="!customerForm.valid"
+                        style="width:80px">
+                  Save
+                </button>
+                <button class="btn btn-outline-secondary"
+                        type="button"
+                        (click)="populateTestData()">
+                    Test Data
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <br>Dirty: {{ customerForm.dirty }}
+      <br>Touched: {{ customerForm.touched }}
+      <br>Status: {{ customerForm.status }}
+      <br>Value: {{ customerForm.value | json }}
+
+      <br>Send Catalog Errors: {{ customerForm.get('sendCatalog').errors | json }}
