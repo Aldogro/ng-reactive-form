@@ -58,6 +58,10 @@ export class CustomerComponent implements OnInit {
     this.addresses.push(this.buildAddress());
   }
 
+  deleteAddress( index: number ): void {
+    this.addresses.removeAt(index);
+  }
+
   buildAddress(): FormGroup {
     return this.fb.group({
       addressType: 'home',
