@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormArray } from '@angular/forms';
 
 import { Customer } from './customer';
 
@@ -26,6 +26,10 @@ export class CustomerComponent implements OnInit {
   customerForm: FormGroup;
   customer: Customer = new Customer();
 
+  get addresses(): FormArray{
+    return <FormArray>this.customerForm.get('addresses');
+  }
+
   constructor(
     private fb: FormBuilder
   ) { }
@@ -41,19 +45,27 @@ export class CustomerComponent implements OnInit {
       sendCatalog: [false, [Validators.required]],
       phone: [null],
       notification: ['email'],
-      addresses: this.fb.group({
-        addressType: 'home',
-        street1: '',
-        street2: '',
-        city: '',
-        state: 'AZ',
-        zip: ''
-      })
+      addresses: this.fb.array([this.buildAddress()])
     });
 
     this.customerForm.get('notification').valueChanges
     .subscribe( data => {
       this.setNotification( data );
+    });
+  }
+
+  addAddress(): void {
+    this.addresses.push(this.buildAddress());
+  }
+
+  buildAddress(): FormGroup {
+    return this.fb.group({
+      addressType: 'home',
+      street1: '',
+      street2: '',
+      city: '',
+      state: '',
+      zip: ''
     });
   }
 
