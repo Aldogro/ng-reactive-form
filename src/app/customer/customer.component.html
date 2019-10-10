@@ -9,7 +9,7 @@
       <div class="form-group row mb-2">
         <label class="col-md-2 col-form-label" for="firstNameId">First Name</label>
         <div class="col-md-8">
-          <input class="form-control" (keypress)="inputSubscribe()" id="firstNameId" formControlName="firstName"
+          <input class="form-control" id="firstNameId" formControlName="firstName"
             type="text" placeholder="First Name (required)"
             [ngClass]="{'is-invalid': (customerForm.get('firstName').touched || customerForm.get('firstName'.dirty)) && !customerForm.get('firstName').valid}">
           <span class="invalid-feedback">
